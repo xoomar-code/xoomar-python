@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xoomar"
+version = "0.1.0"
+description = "Client for the XOOMAR free market data API: short interest, insider trades, COT, funding rates, Fed liquidity, SEC filings and more."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "XOOMAR", email = "info@xoomar.com" }]
+keywords = ["market data", "sec", "finra", "cot", "short interest", "insider trading", "crypto", "api"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Financial and Insurance Industry",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Office/Business :: Financial",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://xoomar.com/markets/api"
+Documentation = "https://xoomar.com/markets/api"
+Source = "https://github.com/xoomar-llc/xoomar-python"
+Data = "https://xoomar.com/markets"
+
+[tool.setuptools.packages.find]
+where = ["src"]
