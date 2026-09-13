@@ -25,7 +25,7 @@ dependencies = []
 [project.urls]
 Homepage = "https://xoomar.com/markets/api"
 Documentation = "https://xoomar.com/markets/api"
-Source = "https://github.com/xoomar-dev/xoomar-python"
+Source = "https://github.com/xoomar-dev-cloud/xoomar-python"
 Data = "https://xoomar.com/markets"
 
 [tool.setuptools.packages.find]
