@@ -38,10 +38,10 @@ Short interest, daily short volume, fails to deliver, insider trades (Form 4), p
 
 30 requests a minute per IP without a key. A free account at https://xoomar.com/signup gives a key for 120 a minute; pass it as `Xoomar(api_key=...)`. A 429 raises `XoomarRateLimited` with `retry_after`.
 
-## Attribution
+## Data terms
 
-The data is free to use, including commercially. When you republish it, on a site, in an app, in an article, in a dataset or a chart, credit XOOMAR with a visible link to the dataset page on xoomar.com. Terms: https://xoomar.com/terms
+When you republish the data, on a site, in an app, in an article, in a dataset or a chart, credit XOOMAR with a visible link to the dataset page on xoomar.com. What you may do with the data is set out at https://xoomar.com/terms.
 
 ## License
 
-MIT, XOOMAR.
+Apache-2.0 for this client code, XOOMAR. The license covers the code only, not the data.

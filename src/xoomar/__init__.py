@@ -5,8 +5,8 @@ objects (lists or dicts). The full envelope of the last call, with
 ``updatedAt``, ``source``, ``license`` and ``attribution``, is on
 ``client.last_meta``.
 
-The data is free with attribution: when you republish it, link to the
-dataset page on xoomar.com. See https://xoomar.com/terms.
+When you republish the data, link to the dataset page on xoomar.com; the terms
+of use are at https://xoomar.com/terms.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from typing import Any, Dict, Optional
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __all__ = ["Xoomar", "XoomarError", "XoomarRateLimited"]
 
 DEFAULT_BASE_URL = "https://xoomar.com"
