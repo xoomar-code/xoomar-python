@@ -45,7 +45,7 @@ class Xoomar:
     """
     >>> from xoomar import Xoomar
     >>> x = Xoomar()                      # or Xoomar(api_key="...") for 120 requests a minute
-    >>> x.short_interest("GME")[-1]
+    >>> x.short_interest("GME")[0]
     {'settlementDate': '2026-08-14', 'symbol': 'GME', 'shortQty': 54036583, ...}
     """
 
@@ -102,15 +102,15 @@ class Xoomar:
     # ── companies (SEC and FINRA) ──
 
     def short_interest(self, symbol: Optional[str] = None) -> Any:
-        """FINRA short interest: history for a symbol, or the latest settlement's highest days to cover."""
+        """FINRA short interest: a symbol's history newest first, or the latest settlement's highest days to cover."""
         return self.get("short-interest", symbol=symbol)
 
     def short_volume(self, symbol: Optional[str] = None, days: Optional[int] = None, sort: Optional[str] = None) -> Any:
-        """FINRA daily short sale volume: history for a symbol, or the latest day (sort="shares" for largest volumes)."""
+        """FINRA daily short sale volume: a symbol's history oldest first, or the latest day (sort="shares" for largest volumes)."""
         return self.get("short-volume", symbol=symbol, days=days, sort=sort)
 
     def fails_to_deliver(self, symbol: Optional[str] = None) -> Any:
-        """SEC fails to deliver: history for a symbol, or the latest settlement date's largest fails."""
+        """SEC fails to deliver: a symbol's history oldest first, or the latest settlement date's largest fails."""
         return self.get("fails-to-deliver", symbol=symbol)
 
     def insiders(self, ticker: Optional[str] = None, type: Optional[str] = None, window: Optional[str] = None) -> Any:

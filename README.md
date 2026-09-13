@@ -11,7 +11,7 @@ from xoomar import Xoomar
 
 x = Xoomar()                          # 30 requests a minute; Xoomar(api_key="...") for 120 with a free key
 
-x.short_interest("GME")[-1]           # FINRA short interest, latest settlement
+x.short_interest("GME")[0]            # FINRA short interest, newest settlement first
 x.short_volume("GME", days=30)        # FINRA daily short sale volume
 x.fails_to_deliver("GME")             # SEC fails to deliver
 x.insiders("NVDA")                    # SEC Form 4 trades
@@ -19,14 +19,14 @@ x.large_holders("HIMS")               # Schedule 13D and 13G holders
 x.financials("AAPL")["quarterly"]     # XBRL income statement by quarter
 x.fund_holders("AMZN")                # which tracked 13F managers hold it
 x.cot("gold")                         # CFTC positioning history
-x.fed_liquidity()[-1]                 # net liquidity, this week
+x.fed_liquidity()[-1]                 # net liquidity, oldest first, so [-1] is this week
 x.funding_rates()                     # perpetual funding on three exchanges
 x.bitcoin_treasuries()                # bitcoin on public balance sheets
 x.form_d(days=7)                      # private placements filed this week
 x.federal_contracts(ticker="LMT")     # federal contract actions
 ```
 
-Every method returns the `data` part of the response; `x.last_meta` holds `updatedAt`, `source`, `license` and `attribution` from the last call. `x.get("short-interest", symbol="TSLA")` calls any endpoint directly and `x.csv("short-interest/csv")` fetches a CSV download.
+Every method returns the `data` part of the response. History endpoints keep the API's own order (short interest, insiders and COT newest first; short volume, fails to deliver and Fed liquidity oldest first), each row carries its date, so sort if you need one direction; `x.last_meta` holds `updatedAt`, `source`, `license` and `attribution` from the last call. `x.get("short-interest", symbol="TSLA")` calls any endpoint directly and `x.csv("short-interest/csv")` fetches a CSV download.
 
 Full endpoint reference, fields and limits: https://xoomar.com/markets/api
 
