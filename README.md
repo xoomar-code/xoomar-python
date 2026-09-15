@@ -12,9 +12,11 @@ from xoomar import Xoomar
 x = Xoomar()                          # 30 requests a minute; Xoomar(api_key="...") for 120 with a free key
 
 x.short_interest("GME")[0]            # FINRA short interest, newest settlement first
-x.short_volume("GME", days=30)        # FINRA daily short sale volume
-x.fails_to_deliver("GME")             # SEC fails to deliver
-x.insiders("NVDA")                    # SEC Form 4 trades
+x.short_volume("GME", days=30)        # FINRA daily short sale volume (since 2021)
+x.fails_to_deliver("GME", from_="2010-01-01", limit=5000)   # whole history in one call
+x.insiders("NVDA", from_="2024-01-01")   # SEC Form 4 trades, filings since 2020
+x.liquidation_events("BTC", min_usd=100000)   # individual liquidations, newest first
+x.liquidation_history("BTC", from_="2026-07-01")   # hourly totals since June 2026
 x.large_holders("HIMS")               # Schedule 13D and 13G holders
 x.financials("AAPL")["quarterly"]     # XBRL income statement by quarter
 x.fund_holders("AMZN")                # which tracked 13F managers hold it

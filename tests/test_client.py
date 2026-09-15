@@ -33,6 +33,15 @@ class ClientTests(unittest.TestCase):
         with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": []}')) as u:
             Xoomar().large_holders("HIMS", form="13D", new=True)
             self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/large-holders?symbol=HIMS&form=13D&new=1")
+        with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": []}')) as u:
+            Xoomar().fails_to_deliver("GME", from_="2010-01-01", limit=5000)
+            self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/fails-to-deliver?symbol=GME&from=2010-01-01&limit=5000")
+        with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": []}')) as u:
+            Xoomar().liquidation_events("BTC", min_usd=100000, limit=5)
+            self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/liquidations/recent?symbol=BTC&minUsd=100000&limit=5")
+        with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": []}')) as u:
+            Xoomar().insiders("aapl", from_="2024-01-01")
+            self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/insiders/aapl?from=2024-01-01")
 
     def test_rate_limit(self):
         import urllib.error

@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from typing import Any, Dict, Optional
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __all__ = ["Xoomar", "XoomarError", "XoomarRateLimited"]
 
 DEFAULT_BASE_URL = "https://xoomar.com"
@@ -105,18 +105,18 @@ class Xoomar:
         """FINRA short interest: a symbol's history newest first, or the latest settlement's highest days to cover."""
         return self.get("short-interest", symbol=symbol)
 
-    def short_volume(self, symbol: Optional[str] = None, days: Optional[int] = None, sort: Optional[str] = None) -> Any:
-        """FINRA daily short sale volume: a symbol's history oldest first, or the latest day (sort="shares" for largest volumes)."""
-        return self.get("short-volume", symbol=symbol, days=days, sort=sort)
+    def short_volume(self, symbol: Optional[str] = None, days: Optional[int] = None, sort: Optional[str] = None, from_: Optional[str] = None, to: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """FINRA daily short sale volume since August 2021: a symbol's history oldest first (from_/to ISO dates, limit up to 5,000), or the latest day (sort="shares" for largest volumes)."""
+        return self.get("short-volume", symbol=symbol, days=days, sort=sort, **{"from": from_, "to": to, "limit": limit})
 
-    def fails_to_deliver(self, symbol: Optional[str] = None) -> Any:
-        """SEC fails to deliver: a symbol's history oldest first, or the latest settlement date's largest fails."""
-        return self.get("fails-to-deliver", symbol=symbol)
+    def fails_to_deliver(self, symbol: Optional[str] = None, from_: Optional[str] = None, to: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """SEC fails to deliver since January 2010: a symbol's history oldest first (from_/to ISO dates, limit up to 5,000), or the latest settlement date's largest fails."""
+        return self.get("fails-to-deliver", symbol=symbol, **{"from": from_, "to": to, "limit": limit})
 
-    def insiders(self, ticker: Optional[str] = None, type: Optional[str] = None, window: Optional[str] = None) -> Any:
-        """SEC Form 4 trades: a ticker's history, or the latest across companies (type="buys", window="7d")."""
+    def insiders(self, ticker: Optional[str] = None, type: Optional[str] = None, window: Optional[str] = None, from_: Optional[str] = None, to: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """SEC Form 4 trades: a ticker's history from filings since 2020 (from_/to ISO dates, limit up to 2,000), or the latest across companies (type="buys", window="7d")."""
         if ticker:
-            return self.get(f"insiders/{ticker.lower()}")
+            return self.get(f"insiders/{ticker.lower()}", **{"from": from_, "to": to, "limit": limit})
         return self.get("insiders", type=type, window=window)
 
     def planned_sales(self, symbol: Optional[str] = None, days: Optional[int] = None) -> Any:
@@ -166,8 +166,16 @@ class Xoomar:
         return self.get(f"open-interest/{slug}")
 
     def liquidations(self) -> Any:
-        """Recent crypto liquidations across exchanges."""
+        """24-hour liquidation summary: totals, long/short split, hourly buckets, top contracts."""
         return self.get("liquidations")
+
+    def liquidation_events(self, symbol: Optional[str] = None, exchange: Optional[str] = None, side: Optional[str] = None, min_usd: Optional[float] = None, limit: Optional[int] = None) -> Any:
+        """Individual liquidation events, newest first (up to 500); filter by contract (BTC or BTCUSDT), exchange (okx, gate, htx), side and minimum notional."""
+        return self.get("liquidations/recent", symbol=symbol, exchange=exchange, side=side, minUsd=min_usd, limit=limit)
+
+    def liquidation_history(self, symbol: Optional[str] = None, from_: Optional[str] = None, to: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """Hourly liquidation totals kept permanently (from 15 June 2026), oldest first; one contract with symbol, a window with from_/to, up to 5,000 hours."""
+        return self.get("liquidations/history", symbol=symbol, **{"from": from_, "to": to, "limit": limit})
 
     def options(self, currency: str = "BTC") -> Any:
         """Deribit options: put/call, max pain, DVOL for BTC or ETH."""
