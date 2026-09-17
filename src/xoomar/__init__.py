@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from typing import Any, Dict, Optional
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 __all__ = ["Xoomar", "XoomarError", "XoomarRateLimited"]
 
 DEFAULT_BASE_URL = "https://xoomar.com"
@@ -118,6 +118,14 @@ class Xoomar:
         if ticker:
             return self.get(f"insiders/{ticker.lower()}", **{"from": from_, "to": to, "limit": limit})
         return self.get("insiders", type=type, window=window)
+
+    def insider_clusters(self, days: Optional[int] = None, min_insiders: Optional[int] = None, min_usd: Optional[float] = None, ticker: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """Cluster buying: companies where several different insiders bought on the open market in the window (min_insiders default 3), buyers and combined value per row."""
+        return self.get("insiders/clusters", days=days, minInsiders=min_insiders, minUsd=min_usd, ticker=ticker, limit=limit)
+
+    def threshold_list(self, date: Optional[str] = None, symbol: Optional[str] = None, market: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """Regulation SHO threshold securities lists (Nasdaq and Cboe daily files since 2022): one date, one symbol's days on the list, or one market."""
+        return self.get("threshold-list", date=date, symbol=symbol, market=market, limit=limit)
 
     def planned_sales(self, symbol: Optional[str] = None, days: Optional[int] = None) -> Any:
         """SEC Form 144 notices of proposed sale."""
@@ -222,6 +230,10 @@ class Xoomar:
     def rates(self, country: Optional[str] = None) -> Any:
         """Central bank policy rates: all economies, or one country code's history (e.g. "us")."""
         return self.get(f"rates/{country}") if country else self.get("rates")
+
+    def treasury_auctions(self, type: Optional[str] = None, term: Optional[str] = None, from_: Optional[str] = None, to: Optional[str] = None, upcoming: Optional[bool] = None, limit: Optional[int] = None) -> Any:
+        """US Treasury auction results and calendar since 2010 (type="Note", "Bond", "TIPS", "FRN", "Bill", "CMB" or "all"; term="10-Year"; upcoming=True for announced auctions)."""
+        return self.get("treasury-auctions", type=type, term=term, upcoming=1 if upcoming else None, limit=limit, **{"from": from_, "to": to})
 
     def calendar(self, from_: Optional[str] = None, to: Optional[str] = None, importance: Optional[str] = None) -> Any:
         """US economic calendar with consensus and actuals."""
