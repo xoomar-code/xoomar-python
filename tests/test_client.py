@@ -51,6 +51,12 @@ class ClientTests(unittest.TestCase):
         with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": []}')) as u:
             Xoomar().treasury_auctions(term="10-Year", upcoming=True)
             self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/treasury-auctions?term=10-Year&upcoming=1")
+        with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": {}}')) as u:
+            Xoomar().earnings("NVDA")
+            self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/earnings/nvda")
+        with mock.patch("urllib.request.urlopen", return_value=FakeResponse(b'{"data": []}')) as u:
+            Xoomar().earnings(status="estimated", to="2026-10-31")
+            self.assertEqual(u.call_args[0][0].full_url, "https://xoomar.com/api/markets/earnings?status=estimated&to=2026-10-31")
 
     def test_rate_limit(self):
         import urllib.error

@@ -1,6 +1,6 @@
 # xoomar
 
-Python client for the [XOOMAR](https://xoomar.com/markets) free market data API: 31 datasets from primary sources (SEC EDGAR and XBRL, FINRA, CFTC, the Federal Reserve, USAspending, exchange APIs) as clean JSON, no key needed to start.
+Python client for the [XOOMAR](https://xoomar.com/markets) free market data API: 32 datasets from primary sources (SEC EDGAR and XBRL, FINRA, CFTC, the Federal Reserve, USAspending, exchange APIs) as clean JSON, no key needed to start.
 
 ```bash
 pip install xoomar
@@ -29,6 +29,8 @@ x.federal_contracts(ticker="LMT")     # federal contract actions
 x.insider_clusters(days=30)           # companies where 3+ insiders bought on the open market
 x.threshold_list(symbol="GME")        # Reg SHO threshold list days (Nasdaq and Cboe, since 2022)
 x.treasury_auctions(term="10-Year")   # Treasury auction results since 2010
+x.earnings("NVDA")["next"]            # next expected earnings date (estimated from last year's 8-K)
+x.earnings(to="2026-10-31")           # the calendar: reported and estimated rows
 ```
 
 Every method returns the `data` part of the response. History endpoints keep the API's own order (short interest, insiders and COT newest first; short volume, fails to deliver and Fed liquidity oldest first), each row carries its date, so sort if you need one direction; `x.last_meta` holds `updatedAt`, `source`, `license` and `attribution` from the last call. `x.get("short-interest", symbol="TSLA")` calls any endpoint directly and `x.csv("short-interest/csv")` fetches a CSV download.

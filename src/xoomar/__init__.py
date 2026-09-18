@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from typing import Any, Dict, Optional
 
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 __all__ = ["Xoomar", "XoomarError", "XoomarRateLimited"]
 
 DEFAULT_BASE_URL = "https://xoomar.com"
@@ -154,6 +154,12 @@ class Xoomar:
     def events(self, ticker: Optional[str] = None, item: Optional[str] = None, days: Optional[int] = None) -> Any:
         """SEC 8-K material events."""
         return self.get("events", ticker=ticker, item=item, days=days)
+
+    def earnings(self, ticker: Optional[str] = None, from_: Optional[str] = None, to: Optional[str] = None, status: Optional[str] = None, limit: Optional[int] = None) -> Any:
+        """Earnings calendar from 8-K Item 2.02 filings. With a ticker: that company's reported dates since 2023 and the next estimate (an object). Without: the window's rows (default today to +14 days; status="reported" or "estimated")."""
+        if ticker and from_ is None and to is None and status is None and limit is None:
+            return self.get(f"earnings/{ticker.lower()}")
+        return self.get("earnings", ticker=ticker, status=status, limit=limit, **{"from": from_, "to": to})
 
     def structured_products(self, **params: Any) -> Any:
         """Bank structured notes from 424B2 and FWP filings (issuer=, underlying=, noteType=, days=, cursor=)."""
