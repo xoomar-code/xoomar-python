@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from typing import Any, Dict, Optional
 
-__version__ = "0.1.6"
+__version__ = "0.1.7"
 __all__ = ["Xoomar", "XoomarError", "XoomarRateLimited"]
 
 DEFAULT_BASE_URL = "https://xoomar.com"
@@ -218,10 +218,6 @@ class Xoomar:
     def bitcoin_treasuries(self) -> Any:
         """Bitcoin held by public companies from their SEC filings."""
         return self.get("bitcoin-treasuries")
-
-    def predictions(self, category: Optional[str] = None) -> Any:
-        """Polymarket odds."""
-        return self.get("predictions", category=category)
 
     # ── macro ──
 

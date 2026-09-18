@@ -1,6 +1,6 @@
 # xoomar
 
-Python client for the [XOOMAR](https://xoomar.com/markets) free market data API: 32 datasets from primary sources (SEC EDGAR and XBRL, FINRA, CFTC, the Federal Reserve, USAspending, exchange APIs) as clean JSON, no key needed to start.
+Python client for the [XOOMAR](https://xoomar.com/markets) free market data API: 31 datasets from primary sources (SEC EDGAR and XBRL, FINRA, CFTC, the Federal Reserve, USAspending, exchange APIs) as clean JSON, no key needed to start.
 
 ```bash
 pip install xoomar
