@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from typing import Any, Dict, Optional
 
-__version__ = "0.1.8"
+__version__ = "0.1.9"
 __all__ = ["Xoomar", "XoomarError", "XoomarRateLimited"]
 
 DEFAULT_BASE_URL = "https://xoomar.com"
@@ -34,7 +34,7 @@ class XoomarError(Exception):
 
 
 class XoomarRateLimited(XoomarError):
-    """429: 30 requests a minute without a key, 120 with a free key from https://xoomar.com/signup."""
+    """429: 10 requests a minute without a key, 30 with a free key from https://xoomar.com/signup."""
 
     def __init__(self, status: int, body: str, url: str, retry_after: Optional[int]):
         super().__init__(status, body, url)
@@ -44,7 +44,7 @@ class XoomarRateLimited(XoomarError):
 class Xoomar:
     """
     >>> from xoomar import Xoomar
-    >>> x = Xoomar()                      # or Xoomar(api_key="...") for 120 requests a minute
+    >>> x = Xoomar()                      # or Xoomar(api_key="...") for 30 requests a minute
     >>> x.short_interest("GME")[0]
     {'settlementDate': '2026-08-14', 'symbol': 'GME', 'shortQty': 54036583, ...}
     """
