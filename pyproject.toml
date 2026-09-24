@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xoomar"
-version = "0.1.7"
+version = "0.1.8"
 description = "Client for the XOOMAR free market data API: short interest, insider trades, COT, funding rates, Fed liquidity, SEC filings and more."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -25,7 +25,7 @@ dependencies = []
 [project.urls]
 Homepage = "https://xoomar.com/markets/api"
 Documentation = "https://xoomar.com/markets/api"
-Source = "https://github.com/xoomar-dev-cloud/xoomar-python"
+Source = "https://github.com/xoomar-code/xoomar-python"
 Data = "https://xoomar.com/markets"
 
 [tool.setuptools.packages.find]
