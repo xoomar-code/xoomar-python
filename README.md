@@ -22,7 +22,7 @@ x.financials("AAPL")["quarterly"]     # XBRL income statement by quarter
 x.fund_holders("AMZN")                # which tracked 13F managers hold it
 x.cot("gold")                         # CFTC positioning history
 x.fed_liquidity()[-1]                 # net liquidity, oldest first, so [-1] is this week
-x.funding_rates()                     # perpetual funding on six venues
+x.funding_rates()                     # perpetual funding on five venues
 x.bitcoin_treasuries()                # bitcoin on public balance sheets
 x.form_d(days=7)                      # private placements filed this week
 x.federal_contracts(ticker="LMT")     # federal contract actions
